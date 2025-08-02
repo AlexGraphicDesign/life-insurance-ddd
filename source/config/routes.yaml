@@ -1,0 +1,19 @@
+api_controllers:
+    resource:
+        path: ../src/Infrastructure/Controller/Api
+        namespace: Infrastructure\Controller\Api
+    type: attribute
+    prefix: /api/
+    name_prefix: api_
+
+entry_point:
+    path: /
+    controller: Infrastructure\Controller\Index::__invoke
+    schemes: [https]
+
+app:
+    path: /{route}
+    controller: Infrastructure\Controller\Index::__invoke
+    requirements:
+        route: '^.+'
+    schemes: [https]

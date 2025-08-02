@@ -1,0 +1,43 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/local/php/Dockerfile
+    working_dir: /var/www/html/
+    extra_hosts:
+      - "life-insurance.app.localhost:host-gateway"
+    networks:
+      - backend
+    volumes:
+      - ./source:/var/www/html/
+      - ./docker/php/logs:/var/log
+      - ./docker/apache-mods/deflate.conf:/etc/apache2/mods-available/deflate.conf
+      - ./docker/local/php/curl.ini:/usr/local/etc/php/conf.d/curl.ini
+      - ./docker/local/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.life-insurance.rule=Host(`life-insurance.app.localhost`)
+      - traefik.http.routers.life-insurance.entrypoints=websecure
+      - traefik.http.routers.life-insurance.tls=true
+      - traefik.http.services.life-insurance.loadbalancer.server.port=80
+
+  node:
+      build:
+        context: .
+        dockerfile: ./docker/local/node/Dockerfile
+      working_dir: /srv/app/
+      tty: true
+      user: node
+      networks:
+        - backend
+      volumes:
+        - ./source:/srv/app
+      ports:
+        - '3001:3001'
+      labels:
+        - traefik.http.routers.life-insurance-front.rule=Host(`life-insurance-front.app.localhost`)
+        - traefik.http.services.life-insurance-front.loadbalancer.server.port=3001
+
+networks:
+  backend:
+    external: true

@@ -1,0 +1,19 @@
+{
+  "base": "/build/",
+  "entryPoints": {
+    "app": {
+      "js": [
+        "http://life-insurance-front.app.localhost:3001/build/front/main.ts"
+      ]
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "8.2.0",
+    8,
+    2,
+    0
+  ],
+  "viteServer": "http://life-insurance-front.app.localhost:3001"
+}
