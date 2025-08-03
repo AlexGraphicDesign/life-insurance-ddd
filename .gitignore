@@ -1,3 +1,5 @@
 docker/certs/*
+docker/php
+!docker/php/logs/apache2/.gitkeep
 !docker/certs/.gitkeep
 .env

@@ -14,7 +14,7 @@ final readonly class Informations
     ) {
     }
 
-    #[Route(path: '/supplier-1/contrats/{contractNumber}', name: self::class, methods: ['GET'])]
+    #[Route(path: '/{supplier}/contrats/{contractNumber}', name: self::class, methods: ['GET'])]
     public function __invoke(string $supplier, string $contractNumber)
     {
         return $this->getInformationsContract->execute($supplier, $contractNumber);
